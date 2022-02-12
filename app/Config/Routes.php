@@ -38,11 +38,15 @@ $routes->setAutoRoute(true);
   $routes->group('api', ['namespace'=> 'App\Controllers\Api'],function($routes){
     $routes->get('singers', 'Singers::index');
     $routes->post('singers', 'Singers::create');
-    $routes->get('singers/(:num)', 'Singers::show/$1'); 
+    $routes->get('singers/(:segment)', 'Singers::show/$1'); 
+    $routes->put('singers/(:segment)', 'Singers::update/$1');
+    
 
 
 });  
-   /*  $routes->resource('singer'); */
+
+/* $routes->resource('singers'); */
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

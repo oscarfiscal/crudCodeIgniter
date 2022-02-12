@@ -11,6 +11,9 @@ use CodeIgniter\API\ResponseTrait;
 
 class Singers extends ResourceController
 {
+
+    protected $modelName = 'App\Models\SingerModel';
+    protected $format = 'json';
     use ResponseTrait;
     public function __construct()
 {
@@ -49,10 +52,55 @@ class Singers extends ResourceController
     public function show($id = null){
         $singerModel = $this->singerModel;
         $data = $singerModel->where('id', $id)->first();
-        if($data){
+        
+       if($data){
             return $this->respond($data);
         }else{
             return $this->failNotFound('singer does not exist.');
-        }
+        } 
     }
+    // update singer
+    public function update($id = null){
+
+            //model
+            $singer = $this->singerModel;
+
+            if ($this->request)
+            {
+                //get request 
+                if($this->request->getJSON()) {
+                
+                    $json = $this->request->getJSON();
+                    
+                    $singer->update($json->id, [
+                       
+                        'name'=>$json->name,
+                        'date'=>$json->date,
+                        'biography'=>$json->biography,
+                        'image'=>$json->image,
+                        'gender'=>$json->gender,
+                    ]);
+    
+                } else {
+    
+                    //update
+                    $data = $this->request->getRawInput();
+                    $singer->update($id, $data);
+                }
+    
+                return $this->respond([
+                    'statusCode' => 200,
+                    'message'    => 'singer updated',
+                ], 200);
+            }
+        
+  
+    
+      
+      
+    }
+       
+
+    
+    
 }
