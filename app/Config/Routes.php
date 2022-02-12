@@ -40,6 +40,7 @@ $routes->setAutoRoute(true);
     $routes->post('singers', 'Singers::create');
     $routes->get('singers/(:segment)', 'Singers::show/$1'); 
     $routes->put('singers/(:segment)', 'Singers::update/$1');
+    $routes->delete('singers/(:segment)', 'Singers::delete/$1');
     
 
 

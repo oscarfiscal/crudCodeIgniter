@@ -99,6 +99,20 @@ class Singers extends ResourceController
       
       
     }
+    // delete singer
+    public function delete($id = null){
+        $singerModel = $this->singerModel;
+        $data = $singerModel->where('id', $id)->first();
+        if($data){
+            $singerModel->delete($id);
+            return $this->respond([
+                'statusCode' => 200,
+                'message'    => 'singer deleted',
+            ], 200);
+        }else{
+            return $this->failNotFound('singer does not exist.');
+        }
+    }
        
 
     
