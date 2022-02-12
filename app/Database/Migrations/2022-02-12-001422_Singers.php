@@ -23,7 +23,7 @@ class Singers extends Migration
                 'type' => 'TEXT',
                     'null' => TRUE,
             ],
-            'bibliography' => [
+            'biography' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],

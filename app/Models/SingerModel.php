@@ -9,12 +9,12 @@ class SingerModel extends Model
     protected $primaryKey = 'id';
 
   
-    protected $allowedFields = ['name', 'date', 'bibliography', 'image', 'gender'];
+    protected $allowedFields = ['name', 'date', 'biography', 'image', 'gender'];
 
     protected $validate = [
         'name'=>'required',
         'date'=>'required',
-        'bibliography'=>'required',
+        'biography'=>'required',
         'image'=>'required',
         'gender'=>'required',
 

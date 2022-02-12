@@ -19,5 +19,24 @@ class Singers extends ResourceController
       
      
     }
+    public function create() {
+        $singerModel =  new SingerModel();
+        $data = [
+            'name' => $this->request->getVar('nombre'),
+           'date' => $this->request->getVar('fechanacimiento'),
+              'biography' => $this->request->getVar('biografia'),
+                'image' => $this->request->getVar('imagen'),
+                'gender' => $this->request->getVar('genero'),
+        ];
+        $singerModel->insert($data);
+        $response = [
+          'status'   => 201,
+          'error'    => null,
+          'messages' => [
+              'success' => 'Singer created'
+          ]
+      ];
+      return $this->respondCreated($response);
+    }
    
 }
