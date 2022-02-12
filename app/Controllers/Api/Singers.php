@@ -11,24 +11,26 @@ class Singers extends ResourceController
 {
     use ResponseTrait;
 
+   /*  get */
     public function index()
     { 
         $singerModel = new SingerModel();
-        $data = $singerModel->orderBy('id', 'DESC')->findAll();
-        return $this->respond($data);
+        $singers = $singerModel->findAll();
+        return $this->respond($singers);
       
      
     }
     public function create() {
         $singerModel =  new SingerModel();
-        $data = [
-            'name' => $this->request->getVar('nombre'),
-           'date' => $this->request->getVar('fechanacimiento'),
-              'biography' => $this->request->getVar('biografia'),
-                'image' => $this->request->getVar('imagen'),
-                'gender' => $this->request->getVar('genero'),
-        ];
-        $singerModel->insert($data);
+        $singerModel->save([
+            'name'=>$this->request->getVar('nombre'),
+            'date'=>$this->request->getVar('fechanacimiento'),
+            'biography'=>$this->request->getVar('biografia'),
+            'image'=>$this->request->getVar('imagen'),
+            'gender'=>$this->request->getVar('genero'),
+        ]);
+     
+      
         $response = [
           'status'   => 201,
           'error'    => null,
