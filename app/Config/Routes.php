@@ -33,7 +33,9 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->group('api');
+$routes->group('api', ['namespace'=> 'App\Controllers\Api'],function($routes){
+    $routes->get('singers', 'Singers::index');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing
