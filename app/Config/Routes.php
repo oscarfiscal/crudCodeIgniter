@@ -35,11 +35,14 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 
 
- $routes->group('api', ['namespace'=> 'App\Controllers\Api'],function($routes){
+  $routes->group('api', ['namespace'=> 'App\Controllers\Api'],function($routes){
     $routes->get('singers', 'Singers::index');
     $routes->post('singers', 'Singers::create');
-}); 
-/* $routes->resource('api', 'artistas'); */
+    $routes->get('singers/(:num)', 'Singers::show/$1'); 
+
+
+});  
+   /*  $routes->resource('singer'); */
 /*
  * --------------------------------------------------------------------
  * Additional Routing
