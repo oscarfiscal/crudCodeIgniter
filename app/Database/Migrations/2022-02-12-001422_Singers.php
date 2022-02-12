@@ -15,6 +15,10 @@ class Singers extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
+            'name'=>[
+                   'type' => 'TEXT',
+                   'null'=>TRUE,
+            ],
             'date'       => [
                 'type' => 'TEXT',
                     'null' => TRUE,

@@ -1,13 +1,14 @@
-<?php namespace App\Models;
-
+<?php 
+namespace App\Models;
 use CodeIgniter\Model;
+
 
 class SingerModel extends Model
 {
-    protected $table = 'singer';
+    protected $table = 'singers';
     protected $primaryKey = 'id';
 
-    protected $returnType = 'array';
+  
     protected $allowedFields = ['name', 'date', 'bibliography', 'image', 'gender'];
 
     protected $validate = [
