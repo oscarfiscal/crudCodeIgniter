@@ -11,11 +11,11 @@ use CodeIgniter\API\ResponseTrait;
 
 class Singers extends ResourceController
 {
-
-    protected $modelName = 'App\Models\SingerModel';
-    protected $format = 'json';
+    
     use ResponseTrait;
+
     public function __construct()
+
 {
     $this->singerModel =new SingerModel();
 }
@@ -28,25 +28,40 @@ class Singers extends ResourceController
     }
     // created singer 
     public function create() {
-        $singerModel =  $this->singerModel;
-        $singerModel->save([
-            'name'=>$this->request->getVar('nombre'),
-            'date'=>$this->request->getVar('fechanacimiento'),
-            'biography'=>$this->request->getVar('biografia'),
-            'image'=>$this->request->getVar('imagen'),
-            'gender'=>$this->request->getVar('genero'),
-        ]);
      
-      
-        $response = [
-          'status'   => 201,
-          'error'    => null,
-          'messages' => [
-              'success' => 'Singer created',
-          ]
 
+      $rules =[
+          'name'=>'required',
+          'date'=>'required',
+          'biography'=>'required',
+            'image'=>'uploaded[image]|max_size[image,1024]|is_image[image]',
+            'gender'=>'required',
+      
       ];
-      return $this->respondCreated($response);
+       //save image 
+      if(!$this->validate($rules)){
+          return $this->fail($this->validator->getErrors());
+      }else{
+
+
+        $picture = $this->request->getFile('image');
+        if(!$picture->isValid())
+        
+            return $this->fail($picture->getErrorString());
+            $picture->move('./uploads/');
+                
+          $data= [
+            'name'=>$this->request->getVar('name'),
+            'date'=>$this->request->getVar('date'),
+            'biography'=>$this->request->getVar('biography'),
+            'image' => $picture->getName(),
+            'gender'=>$this->request->getVar('gender'),
+          ];
+        $save = $this->singerModel->insert($data);
+        $data['save']=$save;
+          return $this->respondCreated($data);
+      } 
+
     }
     // get singer by id
     public function show($id = null){
