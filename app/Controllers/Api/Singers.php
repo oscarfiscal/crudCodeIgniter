@@ -34,7 +34,7 @@ class Singers extends ResourceController
           'name'=>'required',
           'date'=>'required',
           'biography'=>'required',
-            'image'=>'uploaded[image]|max_size[image,1024]|is_image[image]',
+            'image'=>'uploaded[image]|max_size[image,1024]|mime_in[image,image/jpg,image/jpeg,image/png]',
             'gender'=>'required',
       
       ];
