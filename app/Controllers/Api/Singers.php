@@ -76,39 +76,40 @@ class Singers extends ResourceController
     }
     // update singer
     public function update($id = null){
+      
 
-            //model
-            $singer = $this->singerModel;
-
-            if ($this->request)
-            {
-                //get request 
-                if($this->request->getJSON()) {
-                
-                    $json = $this->request->getJSON();
-                    
-                    $singer->update($json->id, [
-                       
-                        'name'=>$json->name,
-                        'date'=>$json->date,
-                        'biography'=>$json->biography,
-                        'image'=>$json->image,
-                        'gender'=>$json->gender,
-                    ]);
-    
-                } else {
-    
-                    //update
-                    $data = $this->request->getRawInput();
-                    $singer->update($id, $data);
-                }
-    
-                return $this->respond([
-                    'statusCode' => 200,
-                    'message'    => 'singer updated',
-                ], 200);
-            }
+        $rules =[
+            'name'=>'required',
+            'date'=>'required',
+            'biography'=>'required',
+              'image'=>'uploaded[image]|max_size[image,1024]|mime_in[image,image/jpg,image/jpeg,image/png]',
+              'gender'=>'required',
         
+        ];
+         //save image 
+        if(!$this->validate($rules)){
+            return $this->fail($this->validator->getErrors());
+        }else{
+  
+  
+          $picture = $this->request->getFile('image');
+          if(!$picture->isValid())
+          
+              return $this->fail($picture->getErrorString());
+              $picture->move('./uploads/');
+                  
+            $data= [
+              'name'=>$this->request->getVar('name'),
+              'date'=>$this->request->getVar('date'),
+              'biography'=>$this->request->getVar('biography'),
+              'image' => $picture->getName(),
+              'gender'=>$this->request->getVar('gender'),
+            ];
+           
+           $this->singerModel->update($id,$data);  // update data
+            return $this->respond($data);
+        }
+
   
     
       
